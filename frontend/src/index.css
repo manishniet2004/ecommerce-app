@@ -1,0 +1,28 @@
+/* 1. Google Fonts MUST come before Tailwind in v4 if you are using @import */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap');
+
+/* 2. Then import Tailwind */
+@import "tailwindcss";
+
+/* 3. Your custom styles stay at the bottom */
+.active hr {
+    display: block;
+}
+
+* {
+    font-family: 'Outfit', sans-serif;
+}
+
+.prata-regular {
+    font-family: 'Prata', serif;
+}
+@media (max-width:640px){
+    a.active{   /*ancer tag*/
+        background-color: black;
+        color:white;
+    }
+}
+
+::-webkit-scrollbar{
+    display:none;
+}
