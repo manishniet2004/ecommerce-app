@@ -10,15 +10,16 @@ const ShopContextProvider= (props)=>{
     const backend_url=import.meta.env.VITE_BACKEND_URL;
     const [search, setSearch]=useState('');
     const [showSearch, setShowSearch]=useState(false);
-    const [cartItems, setCartItems]=useState(()=>{
-        try{
+    const [cartItems, setCartItems]=useState(() => {
+        try {
             return JSON.parse(localStorage.getItem('cartItems')) || {};
-        }catch{
+        } catch (error) {
+            console.error('Failed to parse cartItems from localStorage', error);
             return {};
         }
     });
     const [products, setProducts]=useState([]);
-    const [token, setToken]=useState(()=>localStorage.getItem('token') || '');
+    const [token, setToken]=useState('');
     const navigate=useNavigate();
 
     const addToCart=async(itemId, size)=>{
@@ -27,6 +28,7 @@ const ShopContextProvider= (props)=>{
             toast.error('Select Product Size');
             return;
         }
+        
         let cartData=structuredClone(cartItems);
 
         if(cartData[itemId]){
@@ -40,6 +42,7 @@ const ShopContextProvider= (props)=>{
             cartData[itemId][size]=1;
         }
         setCartItems(cartData);
+        localStorage.setItem('cartItems', JSON.stringify(cartData));
 
         if(token){
             try{
@@ -73,6 +76,7 @@ const ShopContextProvider= (props)=>{
         let cartData=structuredClone(cartItems);
         cartData[itemId][size]=quantity;
         setCartItems(cartData);
+        localStorage.setItem('cartItems', JSON.stringify(cartData));
 
         if(token){
             try{
@@ -125,27 +129,23 @@ const ShopContextProvider= (props)=>{
         try{
             const response=await axios.get(backend_url + '/api/cart/get', {headers:{token}})
             if(response.data.success){
-                setCartItems(response.data.cartData || {});
+                setCartItems(response.data.cartData);
             }
         }catch(error){
             console.error(error);
             toast.error(error.message)
         }
     }
+        useEffect(()=>{
+            getProductsData();
+        },[])
 
-    useEffect(()=>{
-        getProductsData();
-    },[])
-
-    useEffect(()=>{
-        if(token){
-            getUserCart(token);
-        }
-    },[token])
-
-    useEffect(()=>{
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    },[cartItems])
+        useEffect(()=>{
+            if(!token && localStorage.getItem('token')){
+                setToken(localStorage.getItem('token'))
+                getUserCart(localStorage.getItem('token'));
+            }
+        },[])
 
     const value={
         products,
@@ -173,4 +173,4 @@ const ShopContextProvider= (props)=>{
         </ShopContext.Provider>
     )
 }
-export default ShopContextProvider; 
+export default ShopContextProvider;

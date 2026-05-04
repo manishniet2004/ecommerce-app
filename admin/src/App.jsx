@@ -10,7 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';  
 
 
-export const backendURL = import.meta.env.VITE_BACKEND_URL;
+// App.jsx
+export const backend_url = import.meta.env.VITE_BACKEND_URL;
+export const backendURL = import.meta.env.VITE_BACKEND_URL; // Add this to support your Add.jsx file
 export const currency='$';
 
 const App = () => {

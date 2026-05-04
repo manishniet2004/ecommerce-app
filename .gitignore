@@ -1,0 +1,8 @@
+# Ignore node modules in any workspace folder
+node_modules
+
+# Ignore env files everywhere
+*.env
+
+
+
