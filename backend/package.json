@@ -15,7 +15,8 @@
     "cloudinary": "^1.35.0",
     "stripe": "^11.16.0",
     "jsonwebtoken": "^9.0.0",
-    "bcrypt": "^5.1.0"
+    "bcrypt": "^5.1.0",
+    "validator": "^13.9.0"
   },
   "author": "",
   "license": "ISC",
