@@ -16,7 +16,8 @@
     "stripe": "^11.16.0",
     "jsonwebtoken": "^9.0.0",
     "bcrypt": "^5.1.0",
-    "validator": "^13.9.0"
+    "validator": "^13.9.0",
+    "multer": "^1.4.5-lts.1"
   },
   "author": "",
   "license": "ISC",
